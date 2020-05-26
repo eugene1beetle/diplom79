@@ -1,9 +1,3 @@
-/**
- * @author Mugen87 / https://github.com/Mugen87
- */
-
-// ConvexGeometry
-
 THREE.ConvexGeometry = function ( points ) {
 
 	THREE.Geometry.call( this );

@@ -23,6 +23,7 @@ function init() {
 
 	scene = new THREE.Scene();
 	scene.add( new THREE.GridHelper( 2000, 40 ) );
+	scene.background = new THREE.Color( 0xffffff );
 
 	var light = THREE.AmbientLight(0xffffff);
 	scene.add( light );
@@ -230,10 +231,7 @@ function addDatGUI() {
 	gui_sectors.push(change_folder.add(cuboid_size, "Ширина").min(1).max(10).step(1));
 	gui_sectors.push(change_folder.add(cuboid_size, "Висота").min(1).max(10).step(1));
 
-	console.log(gui_sectors);
-
 	guiStrings.onChange(function change_figure() {
-		console.log(guiStrings.getValue());
 		if (guiStrings.getValue() === "Кубоїд") {
 			for (var i = gui_sectors.length; i > 0; i--) {
 				change_folder.remove(gui_sectors.pop());

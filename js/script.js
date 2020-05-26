@@ -165,25 +165,7 @@ function updateOutline() {
 	}
 }
 
-function addDatGUI() {
-	gui = new dat.GUI();
-	var obj;
-
-	var color = {
-		Колір: 0xcf1097
-	};
-
-	gui.addColor(color, "Колір");
-
-	var text = {Фігура: "Фігура"};
-	var choise = "Кубоїд";
-	var guiStrings = gui.add(text, "Фігура", ["Лінія", "Площина", "Кубоїд", "Багатокутник", "Круг", "Піраміда", "Конус", "Циліндр"]);
-	guiStrings.setValue("Кубоїд");
-
-	var change_folder = gui.addFolder("Параметри нового об'єкту'");
-
-	change_folder.open();
-
+function createVariables() {
 	cuboid_size = {
 		Довжина: 1,
 		Ширина: 1,
@@ -226,6 +208,34 @@ function addDatGUI() {
 		Розмір_верхній: 1,
 		Розмір_нижній: 1
 	}
+}
+
+function removeParams(change_folder) {
+	for (var i = gui_sectors.length; i > 0; i--) {
+		change_folder.remove(gui_sectors.pop());
+	}
+}
+
+function addDatGUI() {
+	gui = new dat.GUI();
+	var obj;
+
+	var color = {
+		Колір: 0xcf1097
+	};
+
+	gui.addColor(color, "Колір");
+
+	var text = {Фігура: "Фігура"};
+	var choise = "Кубоїд";
+	var guiStrings = gui.add(text, "Фігура", ["Лінія", "Площина", "Кубоїд", "Багатокутник", "Круг", "Піраміда", "Конус", "Циліндр"]);
+	guiStrings.setValue("Кубоїд");
+
+	var change_folder = gui.addFolder("Параметри нового об'єкту'");
+
+	change_folder.open();
+
+	createVariables();
 
 	gui_sectors.push(change_folder.add(cuboid_size, "Довжина").min(1).max(10).step(1));
 	gui_sectors.push(change_folder.add(cuboid_size, "Ширина").min(1).max(10).step(1));
@@ -233,59 +243,43 @@ function addDatGUI() {
 
 	guiStrings.onChange(function change_figure() {
 		if (guiStrings.getValue() === "Кубоїд") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(cuboid_size, "Довжина").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(cuboid_size, "Ширина").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(cuboid_size, "Висота").min(1).max(20).step(1));
 		}
 		if (guiStrings.getValue() === "Площина") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(square_size, "Ширина").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(square_size, "Висота").min(1).max(20).step(1));
 		}
 		if (guiStrings.getValue() === "Лінія") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(line_size, "Довжина").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(line_size, "Товщина").min(2).max(8).step(1));
 		}
 		if (guiStrings.getValue() === "Багатокутник") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(polygon_size, "Розмір").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(polygon_size, "Кути").min(3).max(16).step(1));
 		}
 		if (guiStrings.getValue() === "Круг") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(circle_size, "Розмір").min(1).max(20).step(1));
 		}
 		if (guiStrings.getValue() === "Піраміда") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(pyramid_size, "Висота").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(pyramid_size, "Кути_Основа").min(3).max(10).step(1));
 			gui_sectors.push(change_folder.add(pyramid_size, "Розмір_Основа").min(1).max(20).step(1));
 		}
 		if (guiStrings.getValue() === "Конус") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(cone_size, "Висота").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(cone_size, "Розмір_Основа").min(1).max(20).step(1));
 		}
 		if (guiStrings.getValue() === "Циліндр") {
-			for (var i = gui_sectors.length; i > 0; i--) {
-				change_folder.remove(gui_sectors.pop());
-			}
+			removeParams(change_folder);
 			gui_sectors.push(change_folder.add(cylinder_size, "Висота").min(1).max(20).step(1));
 			gui_sectors.push(change_folder.add(cylinder_size, "Кути_основа").min(3).max(30).step(1));
 			gui_sectors.push(change_folder.add(cylinder_size, "Розмір_верхній").min(1).max(20).step(1));
@@ -305,12 +299,6 @@ function addDatGUI() {
 			scene.add(linesegments);
 			outline_line.push (linesegments);
 
-			// console.log(mesh.position.x);
-			// console.log(mesh.position.y);
-			// console.log(mesh.position.z);
-			// if ((cuboid_size.Довжина * 100) % 200 == 100) mesh.position.x += 50;
-			// if ((cuboid_size.Висота * 100) % 200 == 100) mesh.position.y += 50;
-			// if ((cuboid_size.Ширина * 100) % 200 == 100) mesh.position.z += 50;
 			scene.add( mesh );
 			elements.push( mesh );
 		}
